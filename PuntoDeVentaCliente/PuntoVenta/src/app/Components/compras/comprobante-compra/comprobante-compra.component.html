@@ -1,0 +1,53 @@
+<div class="container shadow p-3 mb-5 bg-white rounded">
+    <div class="d-flex justify-content-between">
+        <div class="badge bg-primary">
+            <span style="font-size: 20px; font-weight: 600;">No. Factura</span>
+            <div class="mt-2" style="font-size: 15px; font-weight: 400;">
+                {{factura.id}}</div>
+        </div>
+        <div class="badge bg-primary">
+            <span style="font-size: 20px; font-weight: 600;">Fecha</span>
+            <div class="mt-2" style="font-size: 15px; font-weight: 400;">
+                {{factura.fecha  | date: 'd/M/yy, h:mm a' }}</div>
+        </div>
+        <div class="badge bg-primary">
+            <span style="font-size: 20px; font-weight: 600;">Proveedor</span>
+            <div class="mt-2" style="font-size: 15px; font-weight: 400;">
+                {{factura.proveedor.razonSocial}}</div>
+        </div>
+    </div>
+    <div class="row">     
+        <div class="col-lg-12 mt-3">
+            <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Precio</th>
+                        <th>Cantidad</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let compra of factura.detalleCompra">
+                        <td>{{getNombreProducto(compra.idProducto)}}</td>
+                        <td>{{compra.costo}}</td>
+                        <td>{{compra.cantidad}}</td>
+                        <td>{{compra.costo * compra.cantidad | currency }}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span style="font-weight: 600;">Total productos:</span> {{factura.detalleCompra.length}}                   
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span style="font-weight: 600;">Total general:</span> {{getTotal() | currency}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+        </div>
+    </div>
+</div>

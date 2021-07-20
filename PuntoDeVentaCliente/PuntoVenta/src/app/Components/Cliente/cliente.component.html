@@ -1,0 +1,92 @@
+<div class="container shadow p-3 mb-5 bg-white rounded">
+    <div class="row mt-3 mb-3">
+        <div class="col">
+            <div class="float-start">
+                <a class="btn btn-primary mr-sm-2 mb-2"
+                [routerLink]="['/cliente/agregar']">
+                    <i class="fas fa-plus-circle mr-2"></i>
+                    Agregar Cliente
+                </a>
+            </div>
+            <div class="float-end">
+                <input class="dataTable-input me-1 mb-1" placeholder="Buscar..." type="text"
+                [(ngModel)]="filters">
+                <button class="btn btn-primary me-1 mb-1"
+                (click)="filtrar()">
+                    <i class="fas fa-search"></i>
+                </button>
+                <button class="btn btn-secondary me-1 mb-1"
+                (click)="clearFilter()">
+                    <i class="fas fa-eraser"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellido</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Cedula</th>
+                    <th scope="col">Telefono</th>
+                    <th scope="col">Fecha creado</th>
+                    <th scope="col" style="min-width: 90px;">Estado</th>            
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngIf="loanding">
+                    <td colspan="7">
+                        <div class="d-flex justify-content-center">
+                            <div class="spinner-border" role="status">
+                              <span class="sr-only"></span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr *ngIf="clientes.length === 0 && !loanding">
+                    <td colspan="8">
+                       <h1>No hay clientes registrados</h1>
+                    </td>
+                </tr>
+                <tr *ngFor="let cliente of clientes | paginate: { itemsPerPage: 5, currentPage: p }">
+                    <td>{{ cliente.nombre }}</td>
+                    <td>{{ cliente.apellido }}</td>
+                    <td>{{ cliente.email }}</td>
+                    <td>{{ cliente.cedula }}</td>
+                    <td>{{ cliente.telefono }}</td>
+                    <td>{{ cliente.fechaCreado | date: 'd/M/yy, h:mm a' }}</td>
+                    <td>
+                         <span class="badge p-2" [ngClass]="{'bg-primary': cliente.estatus === true,
+                                        'bg-danger': cliente.estatus === false}">
+                            {{ cliente.estatus ? 'Activo' : 'Inactivo' }}
+                        </span>
+                    </td>
+                    <td>
+                        <a class="btn btn-primary mr-sm-2 mb-2" 
+                        [routerLink]="['/cliente','editar',cliente.id]">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <div class="form-check form-switch">
+                            <input type="checkbox" class="form-check-input" id={{cliente.id}}
+                            [checked]='cliente.estatus'
+                            (change)='updateEstatusCliente(cliente.id)'>
+                            <label class="form-check-label" for={{cliente.id}}></label>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination pagination-primary  justify-content-end">
+            <pagination-controls          
+            (pageChange)="p = $event"
+            previousLabel="Anterior"
+            nextLabel="Siguiente"
+            >
+            </pagination-controls>
+        </ul>
+    </nav>
+</div>

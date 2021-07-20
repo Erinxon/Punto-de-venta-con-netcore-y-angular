@@ -1,0 +1,169 @@
+<div class="container">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Agregar Cliente</h4>
+
+                <div class="alert alert-dismissible show fade"
+                [ngClass]="{'alert-success': result.success, 'alert-danger': !result.success}"
+                *ngIf="result.IsSend">
+                    {{result.message}}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
+                    (click)="CerrarMensaje()"></button>
+                </div>
+
+            </div>
+            <div class="card-content">
+                <div class="card-body">
+                    <form class="form" [formGroup]="addCliente" (ngSubmit)="Guardar()">
+                        <div class="row">
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="first-name-column">Nombre</label>
+                                    <input type="text" 
+                                    class="form-control" 
+                                    placeholder="nombre"
+                                    formControlName="nombre"
+                                    [ngClass]="{'is-invalid': CamposValidos.nombre?.invalid && CamposValidos.nombre?.touched}"
+                                    >
+                                    <small *ngIf="CamposValidos.nombre?.invalid && CamposValidos.nombre?.touched" 
+                                    style="font-weight: 600;" class="text-danger">
+                                        El nombre es requerido</small>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="last-name-column">Apellido</label>
+                                    <input 
+                                    type="text" 
+                                    class="form-control" 
+                                    placeholder="Apellido"
+                                    formControlName="apellido"
+                                    [ngClass]="{'is-invalid': CamposValidos.apellido?.invalid && CamposValidos.apellido?.touched}">
+                                    <small *ngIf="CamposValidos.apellido?.invalid && CamposValidos.apellido?.touched" 
+                                    style="font-weight: 600;" class="text-danger">
+                                        El apellido es requerido</small>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="city-column">Cedula</label>
+                                    <input 
+                                    type="text" 
+                                    class="form-control" 
+                                    placeholder="Cedula"
+                                    formControlName="cedula"
+                                    [ngClass]="{'is-invalid': CamposValidos.cedula?.invalid && CamposValidos.cedula?.touched}">
+                                    <small *ngIf="CamposValidos.cedula?.invalid && CamposValidos.cedula?.touched"
+                                    style="font-weight: 600;" class="text-danger">
+                                        La cedula es requerida (Debe ser valida)</small>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="country-floating">Telefono</label>
+                                    <input 
+                                    type="text" 
+                                    class="form-control"
+                                    placeholder="Telefono"
+                                    formControlName="telefono"
+                                    [ngClass]="{'is-invalid': CamposValidos.telefono?.invalid && CamposValidos.telefono?.touched}">                                
+                                    <small *ngIf="CamposValidos.telefono?.invalid && CamposValidos.telefono?.touched" 
+                                    style="font-weight: 600;" class="text-danger">
+                                        El telefono es requerido (Debe ser valido)</small>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-12">
+                                <div class="form-group">
+                                    <label for="company-column">Email</label>
+                                    <input 
+                                    type="email" 
+                                    class="form-control" 
+                                    placeholder="Email"
+                                    formControlName="email"
+                                    [ngClass]="{'is-invalid': CamposValidos.email?.invalid && CamposValidos.email?.touched}">                                 
+                                    <small *ngIf="CamposValidos.email?.invalid && CamposValidos.email?.touched" 
+                                    style="font-weight: 600;" class="text-danger">
+                                        El email es requerido (Debe ser valido)</small>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-12">
+                                <h4 class="card-title">Dirección</h4>
+                                <div class="row" formGroupName="direccion">                                   
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label for="company-column">Provincia</label>
+                                            <input 
+                                            type="text"  
+                                            class="form-control" 
+                                            placeholder="Provincia"
+                                            formControlName="provincia"
+                                            [ngClass]="{'is-invalid': CamposValidos.provincia?.invalid && CamposValidos.provincia?.touched}">                                           
+                                            <small *ngIf="CamposValidos.provincia?.invalid && CamposValidos.provincia?.touched" 
+                                            style="font-weight: 600;" class="text-danger">
+                                                La provicia es requerida</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label for="company-column">Ciudad</label>
+                                            <input 
+                                            type="text" 
+                                            class="form-control"
+                                            placeholder="Ciudad"
+                                            formControlName="ciudad"
+                                            [ngClass]="{'is-invalid': CamposValidos.ciudad?.invalid && CamposValidos.ciudad?.touched}">                                           
+                                            <small *ngIf="CamposValidos.ciudad?.invalid && CamposValidos.ciudad?.touched" 
+                                            style="font-weight: 600;" class="text-danger">
+                                                La ciudad es requerida</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label for="company-column">Calle</label>
+                                            <input 
+                                            type="text"  
+                                            class="form-control" 
+                                            placeholder="Calle"
+                                            formControlName="calle"
+                                            [ngClass]="{'is-invalid': CamposValidos.calle?.invalid && CamposValidos.calle?.touched}">                                         
+                                            <small *ngIf="CamposValidos.calle?.invalid && CamposValidos.calle?.touched"
+                                            style="font-weight: 600;"
+                                             class="text-danger">
+                                                La calle es requerida</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label for="company-column">Casa</label>
+                                            <input 
+                                            type="text" 
+                                            class="form-control" 
+                                            placeholder="Casa"
+                                            formControlName="numeroCasa"
+                                            [ngClass]="{'is-invalid': CamposValidos.numeroCasa?.invalid && CamposValidos.numeroCasa?.touched}">                                   
+                                            <small *ngIf="CamposValidos.numeroCasa?.invalid && CamposValidos.numeroCasa?.touched" 
+                                            style="font-weight: 600;"
+                                            class="text-danger">
+                                                La casa es requerida</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 d-flex justify-content-end mt-2">
+                                <button 
+                                type="submit" 
+                                class="btn btn-primary me-1 mb-1"
+                                [disabled] = "!addCliente.valid"                                
+                                >Guardar</button>
+                                <button 
+                                type="reset" 
+                                class="btn btn-light-secondary me-1 mb-1">Limpiar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>  
+</div>

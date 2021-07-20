@@ -1,0 +1,49 @@
+<div class="container">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Editar Categoria</h4>
+
+                <div class="alert alert-dismissible show fade"
+                [ngClass]="{'alert-success': result.success, 'alert-danger': !result.success}"
+                *ngIf="result.IsSend">
+                    {{result.message}}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
+                    (click)="CerrarMensaje()"></button>
+                </div>
+
+            </div>
+            <div class="card-content">
+                <div class="card-body">
+                    <form class="form" [formGroup]="editCategoria" (ngSubmit)="Guardar()">
+                        <div class="row">
+                            <div class="col-md-12 col-12">
+                                <div class="form-group">
+                                    <label for="first-name-column mb-2"
+                                    style="font-weight: 600; font-size: 20px;">Categoria</label>
+                                    
+                                    <input type="text" 
+                                    class="form-control p-3 mt-3" 
+                                    placeholder="Nombre de la categoria"  
+                                    formControlName="nombre"     
+                                    [ngClass]="{'is-invalid': CamposValidos.nombre?.invalid && CamposValidos.nombre?.touched}"                          
+                                    >      
+                                    <small *ngIf="CamposValidos.nombre?.invalid && CamposValidos.nombre?.touched" 
+                                    style="font-weight: 600;font-size: 20px;" class="text-danger">
+                                      La categoria es requerida (Debe ser valida)</small>                       
+                                </div>
+                            </div>                                        
+                            <div class="col-12 d-flex justify-content-end mt-2">
+                                <button 
+                                type="submit" 
+                                class="btn btn-primary me-1 mb-1"
+                                [disabled] = "!editCategoria.valid"                                
+                                >Guardar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>  
+</div>

@@ -1,0 +1,121 @@
+<div class="container shadow p-3 mb-5 bg-white rounded">
+    <div class="row mt-3 mb-3">
+        <h1 class="text-center" style="font-weight: 500;">Datos de la empresa</h1>
+   
+        <div class="col-lg-12">
+            <div class="card">
+                
+                <div class="card-content">
+                    
+                    <div class="card-body">
+                        <div class="alert alert-dismissible show fade"
+                        [ngClass]="{'alert-success': result.success, 'alert-danger': !result.success}"
+                        *ngIf="result.IsSend">
+                            {{result.message}}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
+                            (click)="CerrarMensaje()"></button>
+                        </div>
+                        <form class="form" [formGroup]="formEmpresa" (ngSubmit)="save()">
+                            <div class="row">                           
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label for="last-name-column">Rnc</label>
+                                        <input 
+                                        type="text" 
+                                        class="form-control" 
+                                        placeholder="Rnc"    
+                                        formControlName="rnc" 
+                                        [ngClass]="{'is-invalid': CamposValidos.rnc?.invalid && CamposValidos.rnc?.touched}"                   
+                                       >
+                                       <small *ngIf="CamposValidos.rnc?.invalid && CamposValidos.rnc?.touched" 
+                                       style="font-weight: 600;" class="text-danger">
+                                           El rnc es requerido</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label for="first-name-column">Ncf</label>
+                                        <input type="text" 
+                                        class="form-control" 
+                                        placeholder="Ncf"
+                                        formControlName="ncf"
+                                        [ngClass]="{'is-invalid': CamposValidos.ncf?.invalid && CamposValidos.ncf?.touched}"
+                                        >
+                                        <small *ngIf="CamposValidos.ncf?.invalid && CamposValidos.ncf?.touched" 
+                                        style="font-weight: 600;" class="text-danger">
+                                            El Ncf es requerido</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-12">
+                                    <div class="form-group">
+                                        <label for="first-name-column">Razón social</label>
+                                        <input type="text" 
+                                        class="form-control" 
+                                        placeholder="Razón social"
+                                        formControlName="razonSocial"
+                                        [ngClass]="{'is-invalid': CamposValidos.razonSocial?.invalid && CamposValidos.razonSocial?.touched}"
+                                        >
+                                        <small *ngIf="CamposValidos.razonSocial?.invalid && CamposValidos.razonSocial?.touched" 
+                                        style="font-weight: 600;" class="text-danger">
+                                            La Razón social es requerida</small>
+                                    </div>
+                                </div>
+    
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label for="first-name-column">Nombre</label>
+                                        <input type="text" 
+                                        class="form-control" 
+                                        placeholder="Nombre"
+                                        formControlName="nombre"
+                                        [ngClass]="{'is-invalid': CamposValidos.nombre?.invalid && CamposValidos.nombre?.touched}"
+                                        >
+                                        <small *ngIf="CamposValidos.nombre?.invalid && CamposValidos.nombre?.touched" 
+                                        style="font-weight: 600;" class="text-danger">
+                                            El nombre requerido</small>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label for="first-name-column">Telefono</label>
+                                        <input type="text" 
+                                        class="form-control" 
+                                        placeholder="telefono"
+                                        formControlName="telefono"
+                                        [ngClass]="{'is-invalid': CamposValidos.telefono?.invalid && CamposValidos.telefono?.touched}"
+                                        >
+                                        <small *ngIf="CamposValidos.telefono?.invalid && CamposValidos.telefono?.touched" 
+                                        style="font-weight: 600;" class="text-danger">
+                                            El telefono requerido</small>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 col-12">
+                                    <div class="form-group">
+                                        <label for="first-name-column">Dirección</label>
+                                        <textarea  class="form-control" placeholder="Dirección"
+                                        formControlName="direccion"
+                                        [ngClass]="{'is-invalid': CamposValidos.direccion?.invalid && CamposValidos.direccion?.touched}">
+                                        </textarea>
+                                        <small *ngIf="CamposValidos.direccion?.invalid && CamposValidos.direccion?.touched" 
+                                        style="font-weight: 600;" class="text-danger">
+                                            La dirección requerida</small>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-12 d-flex justify-content-end mt-2">
+                                <button 
+                                type="submit" 
+                                class="btn btn-primary btn-block p-2 me-1 mb-1"     
+                                [disabled]="formEmpresa.invalid"                 
+                                >{{empresa.length > 0 ? 'Editar' : 'Agregar'}}</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

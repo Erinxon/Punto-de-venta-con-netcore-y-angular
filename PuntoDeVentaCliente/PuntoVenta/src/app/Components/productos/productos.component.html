@@ -1,0 +1,100 @@
+<div class="container shadow p-3 mb-5 bg-white rounded">
+    <div class="row mt-3 mb-3">
+        <div class="col">
+            <div class="float-start">
+                <a class="btn btn-primary mr-sm-2 mb-2"
+                [routerLink]="['/productos/agregar']">
+                    <i class="fas fa-plus-circle mr-2"></i>
+                    Agregar Producto
+                </a>
+            </div>
+            <div class="float-end">
+                <input class="dataTable-input me-1 mb-1" placeholder="Buscar..." type="text"
+                [(ngModel)]="filters">
+                <button class="btn btn-primary me-1 mb-1"
+                (click)="filtrar()">
+                    <i class="fas fa-search"></i>
+                </button>
+                <button class="btn btn-secondary me-1 mb-1"
+                (click)="clearFilter()">
+                    <i class="fas fa-eraser"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Imagen</th>
+                    <th scope="col">Código</th>
+                    <th scope="col">Producto</th>
+                    <th scope="col">Descripción</th>
+                    <th scope="col">Costo</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Stock</th>
+                    <th scope="col">Categoria</th>
+                    <th scope="col">Fecha creado</th>
+                    <th scope="col" style="min-width: 90px;">Estado</th>            
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngIf="loanding">
+                    <td colspan="10">
+                        <div class="d-flex justify-content-center">
+                            <div class="spinner-border" role="status">
+                              <span class="sr-only"></span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr *ngIf="productos.length === 0 && !loanding">
+                    <td colspan="8">
+                       <h1>No hay productos registrados</h1>
+                    </td>
+                </tr>
+                <tr *ngFor="let producto of productos | paginate: { itemsPerPage: 5, currentPage: p }">
+                    <td>
+                        <img [src]="producto.imagen" alt="" class="img-rounded" width="60">
+                    </td>
+                    <td>{{ producto.codigo }}</td>
+                    <td>{{ producto.nombreProducto }}</td>
+                    <td>{{ producto.descripcion }}</td>
+                    <td>{{ producto.costo }}</td>
+                    <td>{{ producto.precio }}</td>
+                    <td>{{ producto.stock }}</td>
+                    <td>{{ producto.categoria.nombre }}</td>
+                    <td>{{ producto.fechaCreado | date: 'd/M/yy, h:mm a' }}</td>
+                    <td>
+                         <span class="badge p-2" [ngClass]="{'bg-primary': producto.estatus === true,
+                                        'bg-danger': producto.estatus === false}">
+                            {{ producto.estatus ? 'Activo' : 'Inactivo' }}
+                        </span>
+                    </td>
+                    <td>
+                        <a class="btn btn-primary mr-sm-2 mb-2"
+                        [routerLink]="['/productos/editar',producto.id]">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <div class="form-check form-switch">
+                            <input type="checkbox" class="form-check-input" id={{producto.id}}
+                            [checked]='producto.estatus'
+                            (change)='updateEstatusCliente(producto.id)'>
+                            <label class="form-check-label" for={{producto.id}}></label>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination pagination-primary  justify-content-end mt-3">
+            <pagination-controls          
+            (pageChange)="p = $event"
+            previousLabel="Anterior"
+            nextLabel="Siguiente"
+            >
+            </pagination-controls>
+        </ul>
+    </nav>
+</div>

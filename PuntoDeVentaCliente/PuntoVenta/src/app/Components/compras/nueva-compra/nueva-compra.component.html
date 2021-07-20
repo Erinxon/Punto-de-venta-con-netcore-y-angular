@@ -1,0 +1,253 @@
+<div class="container">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header" [ngClass]="{'alert-success': result.success, 'alert-danger': !result.success}"
+            *ngIf="result.IsSend">
+                <div class="alert alert-dismissible show fade"
+                >
+                    <h1 style="text-align: center; color: white;">{{result.message}}</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
+                    (click)="CerrarMensaje()"></button>
+                </div>
+            </div>
+            <div class="card-content">
+                <div class="card-body">
+                    <form class="form" [formGroup]="formCompra" (ngSubmit)="addItem()">
+                        <h4 class="card-title" style="font-weight: 600;">Nueva Compra</h4>
+                        <div class="row">
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="company-column" style="font-weight: 600;">Seleccione el Proveedor</label>
+                                    <div class="choices" [ngClass]="{'is-open-focused': ischoicesOpenProveedor}" data-type="select-one" tabindex="0" role="combobox"
+                                        aria-autocomplete="list" aria-haspopup="true" aria-expanded="ischoicesOpenProveedor"
+                                        >
+                                        <div class="choices__inner" (click)="openShoiceProveedor()">
+                                            <select 
+                                                formControlName="idProveedor"
+                                                multiple class="choices form-select choices__input"
+                                                hidden="" tabindex="-1" data-choice="active"
+                                                
+                                                >
+                                                <option [ngValue]="proveedorSeleccionado.id">{{proveedorSeleccionado.razonSocial}}</option>
+                                            </select>
+                                            <div class="choices__list choices__list--single">
+                                                <div class="choices__item choices__item--selectable" data-item=""
+                                                    data-id="4" data-value="triangle" data-custom-properties="null"
+                                                    aria-selected="true">{{proveedorSeleccionado.razonSocial}}</div>
+                                            </div>
+                                        </div>
+                                        <small *ngIf="!ischoicesOpenProveedor && IsSelectProveedor && CamposValidos.idProveedor?.hasError('required')" 
+                                        style="font-weight: 600;" class="text-danger">
+                                            El proveedor es requerido</small>    
+                                        <div class="choices__list choices__list--dropdown" 
+                                        [ngClass]="{'is-active': ischoicesOpenProveedor}"
+                                        aria-expanded="ischoicesOpenProveedor">
+                                        <input
+                                                type="text" class="choices__input choices__input--cloned"                   
+                                                placeholder="Buscar proveedor" 
+                                                [ngModelOptions]="{standalone: true}"
+                                                [ngModel]="searchProveedor" (ngModelChange)="filterProveedor($event)">
+                                            <div class="choices__list" role="listbox">
+                                                <div class="choices__group " role="group" data-group=""
+                                                    data-id="1538049411036" data-value="prodcutos">
+                                                    <div class="choices__heading">Proveedores</div>
+                                                </div>
+                                                <div *ngFor="let proveedor of proveedores">
+                                                    <div id="proveedor.id"
+                                                    *ngIf="proveedor.estatus"
+                                                    class="choices__item choices__item--choice choices__item--selectable"
+                                                    role="treeitem" data-choice="" data-id="7" data-value="blue"
+                                                    data-select-text="Press to select" data-choice-selectable=""
+                                                    (click)="selectProveedor(proveedor.id, proveedor.razonSocial)"
+                                                    >
+                                                    {{proveedor.razonSocial}}
+                                                </div>    
+                                                </div>                                                                                                       
+                                            </div>
+                                        </div>
+                                    </div>     
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="company-column" style="font-weight: 600;">Seleccione el producto</label>
+                                    <div class="choices" [ngClass]="{'is-open-focused': ischoicesOpenProducto}" data-type="select-one" tabindex="0" role="combobox"
+                                        aria-autocomplete="list" aria-haspopup="true" aria-expanded="ischoicesOpenProducto"
+                                        >
+                                        <div class="choices__inner" (click)="openShoiceProducto()">
+                                            <select 
+                                                formControlName="idProducto"
+                                                multiple class="choices form-select choices__input"
+                                                hidden="" tabindex="-1" data-choice="active"
+                                                
+                                                >
+                                                <option [ngValue]="productoSeleccionado.id">{{productoSeleccionado.nombre}}</option>
+                                            </select>
+                                            <div class="choices__list choices__list--single">
+                                                <div class="choices__item choices__item--selectable" data-item=""
+                                                    data-id="4" data-value="triangle" data-custom-properties="null"
+                                                    aria-selected="true">{{productoSeleccionado.nombre}}</div>
+                                            </div>
+                                        </div>
+                                        <small *ngIf="!ischoicesOpenProducto && IsSelectProducto && CamposValidos.idProducto?.hasError('required')" 
+                                        style="font-weight: 600;" class="text-danger">
+                                            El producto es requerido</small>    
+                                        <div class="choices__list choices__list--dropdown" 
+                                        [ngClass]="{'is-active': ischoicesOpenProducto}"
+                                        aria-expanded="ischoicesOpenProducto">
+                                        <input
+                                                type="text" class="choices__input choices__input--cloned"                   
+                                                placeholder="Buscar producto" 
+                                                [ngModelOptions]="{standalone: true}"
+                                                [ngModel]="searchProducto" (ngModelChange)="filterProductos($event)">
+                                            <div class="choices__list" role="listbox">
+                                                <div class="choices__group " role="group" data-group=""
+                                                    data-id="1538049411036" data-value="productos">
+                                                    <div class="choices__heading">Productos</div>
+                                                </div>
+                                                <div *ngFor="let producto of productos">
+                                                    <div id="producto.id"
+                                                    *ngIf="producto.estatus"
+                                                    class="choices__item choices__item--choice choices__item--selectable"
+                                                    role="treeitem" data-choice="" data-id="7" data-value="blue"
+                                                    data-select-text="Press to select" data-choice-selectable=""
+                                                    (click)="selectProducto(producto.id, producto.nombreProducto)"
+                                                    >
+                                                    {{producto.nombreProducto}}
+                                                </div>    
+                                                </div>                                                                                                       
+                                            </div>
+                                        </div>
+                                    </div>     
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="company-column">Costo</label>
+                                    <input type="number" class="form-control" placeholder="Costo"
+                                        formControlName="costo"
+                                        [ngClass]="{'is-invalid': CamposValidos.costo?.invalid && CamposValidos.costo?.touched
+                                        && CamposValidos.costo?.hasError('required')}">
+                                    <small *ngIf="CamposValidos.costo?.invalid && CamposValidos.costo?.touched
+                                    && CamposValidos.costo?.hasError('required')"
+                                        style="font-weight: 600;" class="text-danger">
+                                        El costo es requerido</small>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="company-column">Cantidad</label>
+                                    <input type="number" class="form-control" placeholder="Cantidad"
+                                        formControlName="cantidad"
+                                        [ngClass]="{'is-invalid': CamposValidos.cantidad?.invalid && CamposValidos.cantidad?.touched && CamposValidos.cantidad?.hasError('required')}">
+                                    <small *ngIf="CamposValidos.cantidad?.invalid && CamposValidos.cantidad?.touched && CamposValidos.cantidad?.hasError('required')"
+                                        style="font-weight: 600;" class="text-danger">
+                                        La cantidad es requerida</small>
+                                </div>
+                            </div>
+                            <div class="col-12 d-flex justify-content-end mt-2">
+                                <button 
+                                type="submit" 
+                                class="btn btn-primary me-1 mb-1 btn-block p-2" 
+                                [disabled] = "!formCompra.valid"                                                         
+                                >Agregar</button>
+                            </div>
+                        </div>                    
+                    </form>
+                    <div class="col-12 mt-4" *ngIf="listaCompra.detalleCompra.length > 0">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Producto</th>
+                                        <th scope="col">Costo</th>
+                                        <th scope="col">Cantidad</th>
+                                        <th scope="col">Total</th>      
+                                        <th scope="col">Remover</th>         
+                                    </tr>
+                                </thead>
+                                <tbody>                  
+                                    <tr *ngFor="let compra of listaCompra.detalleCompra 
+                                    | paginate: { itemsPerPage: 5, currentPage: p }; index as i;">
+                                        <td>{{getNombreProducto(compra.idProducto)}}</td>
+                                        <td>{{compra.costo}}</td>
+                                        <td>{{compra.cantidad}}</td>
+                                        <td>{{compra.costo * compra.cantidad | currency}}</td>
+                                        <td>
+                                            <button class="btn btn-danger" (click)="quitarProducto(i)">
+                                                <i class="far fa-trash-alt"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span style="font-weight: 600;">Total producto:</span> {{listaCompra.detalleCompra.length}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span style="font-weight: 600;">Total general:</span> {{getTotal() | currency}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination pagination-primary  justify-content-end">
+                                    <pagination-controls          
+                                    (pageChange)="p = $event"
+                                    previousLabel="Anterior"
+                                    nextLabel="Siguiente"
+                                    >
+                                    </pagination-controls>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div> 
+                    <div class="col-12 d-flex justify-content-end mt-2"
+                    *ngIf="listaCompra.detalleCompra.length > 0">
+                        <button 
+                        type="submit" 
+                        class="btn btn-primary me-1 mb-1 btn-block p-2"                       
+                        (click)="confirmarCompra()"                                                    
+                        >Confirmar Compra</button>
+                        <button 
+                        type="reset" 
+                        class="btn btn-danger me-1 mb-1 btn-block p-2"
+                        data-bs-toggle="modal"
+                        data-bs-target="#danger">Cancelar</button>
+                    </div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div> 
+</div>
+
+<div class="modal fade text-left show" id="danger" tabindex="-1" aria-labelledby="cancelarCompra" 
+style="display: none; padding-right: 17px;" 
+aria-modal="false" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <h5 class="modal-title white" id="cancelarCompra">
+                    Estas seguro que quieres cancelar la compra?
+                </h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <i data-feather="x"></i>
+                </button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                    <i class="bx bx-x d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">No</span>
+                </button>
+                <button type="button" class="btn btn-danger ml-1" data-bs-dismiss="modal"
+                (click)="OnResetForm()">
+                    <i class="bx bx-check d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">Si</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,104 @@
+<div id="sidebar" [ngClass]="menuActive ? 'active' : ''" class="menuActive">
+    <div class="sidebar-wrapper active">
+        <div class="sidebar-header">
+            <div class="d-flex justify-content-between">
+                <div class="logo">
+                    <!--a [routerLink]="['/']"><img src="assets/images/logo/logo.png" alt="Logo" srcset=""></a-->
+                    <a [routerLink]="['/']">Ventas</a>
+                </div>
+                <div class="toggler">
+                    <a (click)="menuActive = !menuActive" class="sidebar-hide d-xl-none d-block"
+                        style="cursor: pointer;"><i class="bi bi-x bi-middle"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="sidebar-menu">
+            <ul class="menu">
+                <li class="sidebar-title">Menu</li>
+        
+                <li class="sidebar-item" [ngClass]="{'active': isRutaInicio()}">
+                    <a  [routerLink]="['/']" class='sidebar-link'>
+                        <i class="fas fa-home"></i>
+                        <span>Inicio</span>
+                    </a>
+                </li>
+        
+                <li class="sidebar-item" routerLinkActive="active">
+                    <a  [routerLink]="['/productos']" class='sidebar-link'>
+                        <i class="fas fa-barcode"></i>
+                        <span>Productos</span>
+                    </a>
+                </li>
+        
+                <li class="sidebar-item" routerLinkActive="active">
+                    <a  [routerLink]="['/categorias']" class='sidebar-link'>
+                        <i class="fas fa-tags"></i>
+                        <span>Categorias</span>
+                    </a>
+                </li>
+        
+                <li class="sidebar-item" routerLinkActive="active">
+                    <a [routerLink]="['/cliente']" class='sidebar-link'> 
+                        <i class="fas fa-users"></i>
+                        <span>Clientes</span>
+                    </a>
+                </li>
+        
+                <li class="sidebar-item" routerLinkActive="active">
+                    <a [routerLink]="['/proveedores']" class='sidebar-link'>
+                        <i class="fas fa-truck"></i>
+                        <span>Proveedores</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-item" routerLinkActive="active">
+                    <a [routerLink]="['/compras']" class='sidebar-link'>
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>Compras</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-item" routerLinkActive="active">
+                    <a [routerLink]="['/ventas']" class='sidebar-link'>
+                        <i class="fas fa-cash-register"></i>
+                        <span>Ventas</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-item has-sub" [ngClass]="{'active': getCurrentUrl('/usuario')
+                    || getCurrentUrl('/empresa')}">
+                    <a  class="sidebar-link" (click)="desplegarSubMenu()"
+                    style="cursor: pointer;"> 
+                        <i class="fas fa-cogs"></i>
+                        <span>Configuración</span>
+                    </a>
+                    <ul class="submenu" [ngClass]="{'active': subMenu}">
+                        <li class="submenu-item" routerLinkActive="active">
+                            <a [routerLink]="['/usuarios']"  ><i class="fas fa-users-cog"></i>
+                            <span class="subMenuItem">Usuarios</span></a>
+                        </li>
+                        <!--li class="submenu-item ">
+                            <a href="#">
+                                <i class="fas fa-database"></i>
+                                <span  class="subMenuItem">Copia de suguridad</span>
+                            </a>
+                        </li-->
+                        <li class="submenu-item " routerLinkActive="active">
+                            <a [routerLink]="['/empresa']"  >
+                                <i class="far fa-building"></i>
+                            <span class="subMenuItem">Empresa</span>
+                            </a>
+                        </li>
+                        <!--li class="submenu-item ">
+                            <a href="#"><i class="fas fa-recycle"></i>
+                            <span class="subMenuItem">Papelera de reciclaje</span></a>
+                        </li-->
+                    </ul>
+                </li>
+        
+        
+            </ul>
+        </div>
+        <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
+    </div>
+</div>

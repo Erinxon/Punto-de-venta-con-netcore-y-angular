@@ -1,0 +1,91 @@
+<div class="container shadow p-3 mb-5 bg-white rounded">
+    <div class="row mt-3 mb-3">
+        <div class="col">
+            <div class="float-start">
+                <a class="btn btn-primary mr-sm-2 mb-2"  [routerLink]="['/proveedores/agregar']">
+                    <i class="fas fa-plus-circle mr-2"></i>
+                    Agregar Proveedor
+                </a>
+            </div>
+            <div class="float-end">
+                <input class="dataTable-input me-1 mb-1" placeholder="Buscar..." type="text"
+                [(ngModel)]="filters">
+                <button class="btn btn-primary me-1 mb-1"
+                (click)="filtrar()">
+                    <i class="fas fa-search"></i>
+                </button>
+                <button class="btn btn-secondary me-1 mb-1"
+                (click)="clearFilter()">
+                    <i class="fas fa-eraser"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Rnc</th>
+                    <th scope="col">Razon Social</th>
+                    <th scope="col">Telefono</th>
+                    <th scope="col">Provincia</th>
+                    <th scope="col">Ciudad</th>
+                    <th scope="col">Fecha creado</th>
+                    <th scope="col" style="min-width: 90px;">Estado</th>            
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngIf="loanding">
+                    <td colspan="7">
+                        <div class="d-flex justify-content-center">
+                            <div class="spinner-border" role="status">
+                              <span class="sr-only"></span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr *ngIf="proveedores.length === 0 && !loanding">
+                    <td colspan="8">
+                       <h1>No hay provedores registrados</h1>
+                    </td>
+                </tr>
+                <tr *ngFor="let proveedor of proveedores | paginate: { itemsPerPage: 5, currentPage: p }">
+                    <td>{{ proveedor.rnc }}</td>
+                    <td>{{ proveedor.razonSocial }}</td>
+                    <td>{{ proveedor.telefono }}</td>
+                    <td>{{ proveedor.direccion.provincia }}</td>
+                    <td>{{ proveedor.direccion.ciudad }}</td>
+                    <td>{{ proveedor.fechaCreado | date: 'd/M/yy, h:mm a' }}</td>
+                    <td>
+                         <span class="badge p-2" [ngClass]="{'bg-primary': proveedor.estatus === true,
+                                        'bg-danger': proveedor.estatus === false}">
+                            {{ proveedor.estatus ? 'Activo' : 'Inactivo' }}
+                        </span>
+                    </td>
+                    <td>
+                        <a class="btn btn-primary mr-sm-2 mb-2" 
+                        [routerLink]="['/proveedores','editar',proveedor.id]">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <div class="form-check form-switch">
+                            <input type="checkbox" class="form-check-input" id={{proveedor.id}}
+                            [checked]='proveedor.estatus'
+                            (change)='updateEstatusCliente(proveedor.id)'>
+                            <label class="form-check-label" for={{proveedor.id}}></label>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination pagination-primary  justify-content-end">
+            <pagination-controls          
+            (pageChange)="p = $event"
+            previousLabel="Anterior"
+            nextLabel="Siguiente"
+            >
+            </pagination-controls>
+        </ul>
+    </nav>
+</div>

@@ -1,0 +1,74 @@
+<div class="container shadow p-3 mb-5 bg-white rounded">
+    <div class="row mt-3 mb-3">
+        <div class="col">
+            <div class="float-start">
+                <a class="btn btn-primary mr-sm-2 mb-2"  [routerLink]="['/compras/nuevaCompra']">
+                    <i class="fas fa-plus-circle mr-2"></i>
+                    Nueva Compra
+                </a>
+            </div>
+            <div class="float-end">
+                <input class="dataTable-input me-1 mb-1" placeholder="Buscar..." type="text"
+                [(ngModel)]="filters">
+                <button class="btn btn-primary me-1 mb-1"
+                (click)="filtrar()">
+                    <i class="fas fa-search"></i>
+                </button>
+                <button class="btn btn-secondary me-1 mb-1"
+                (click)="clearFilter()">
+                    <i class="fas fa-eraser"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Fecha Compra</th>
+                    <th scope="col">Cajero</th>
+                    <th scope="col">Proveedor</th> 
+                    <th scope="col">Total</th> 
+                    <th>Comprobante</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngIf="loanding">
+                    <td colspan="7">
+                        <div class="d-flex justify-content-center">
+                            <div class="spinner-border" role="status">
+                              <span class="sr-only"></span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr *ngIf="compras.length === 0 && !loanding">
+                    <td colspan="8">
+                       <h1>No hay compras registradas</h1>
+                    </td>
+                </tr>
+                <tr *ngFor="let compra of compras | paginate: { itemsPerPage: 5, currentPage: p }">
+                    <td>{{ compra.fecha | date: 'd/M/yy, h:mm a' }}</td>
+                    <td>{{ compra.usuario.nombre }} {{ compra.usuario.apellido }}</td>
+                    <td>{{ compra.proveedor.razonSocial }}</td>     
+                    <td>{{ getTotal(compra.id) | currency}}</td>    
+                    <td>
+                        <button class="btn btn-primary" (click)="comprobante(compra.id)">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                        </button>
+                    </td>           
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination pagination-primary  justify-content-end">
+            <pagination-controls          
+            (pageChange)="p = $event"
+            previousLabel="Anterior"
+            nextLabel="Siguiente"
+            >
+            </pagination-controls>
+        </ul>
+    </nav>
+</div>

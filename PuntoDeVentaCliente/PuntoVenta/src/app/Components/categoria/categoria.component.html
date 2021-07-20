@@ -1,0 +1,85 @@
+<div class="container shadow p-3 mb-5 bg-white rounded">
+    <div class="row mt-3 mb-3">
+        <div class="col">
+            <div class="float-start">
+                <a class="btn btn-primary mr-sm-2 mb-2"  [routerLink]="['/categorias/agregar']">
+                    <i class="fas fa-plus-circle mr-2"></i>
+                    Agregar Categoria
+                </a>
+            </div>
+            <div class="float-end">
+                <input class="dataTable-input me-1 mb-1" placeholder="Buscar..." type="text"
+                [(ngModel)]="filters">
+                <button class="btn btn-primary me-1 mb-1"
+                (click)="filtrar()">
+                    <i class="fas fa-search"></i>
+                </button>
+                <button class="btn btn-secondary me-1 mb-1"
+                (click)="clearFilter()">
+                    <i class="fas fa-eraser"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Fecha creada</th>
+                    <th scope="col" scope="col" style="min-width: 90px;">Estatus</th>
+                    <th scope="col">Acción</th>        
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngIf="loanding">
+                    <td colspan="8">
+                        <div class="d-flex justify-content-center">
+                            <div class="spinner-border" role="status">
+                              <span class="sr-only"></span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr *ngIf="categorias.length === 0 && !loanding">
+                    <td colspan="8">
+                       <h1>No hay categoria registradas</h1>
+                    </td>
+                </tr>
+                <tr *ngFor="let categoria of categorias | paginate: { itemsPerPage: 5, currentPage: p }">
+                    <td>{{categoria.nombre}}</td>
+                    <td>{{categoria.fechaCreado | date: 'd/M/yy, h:mm a' }}</td>
+                    <td>       
+                        <span class="badge p-2" [ngClass]="{'bg-primary': categoria.estatus === true,
+                                        'bg-danger': categoria.estatus === false}">
+                            {{ categoria.estatus ? 'Activo' : 'Inactivo' }}
+                        </span>
+                    </td>
+                    <td>
+                        <a class="btn btn-primary mr-sm-2 mb-2"
+                        [routerLink]="['/categorias','editar',categoria.id]">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <div class="form-check form-switch">
+                            <input type="checkbox" class="form-check-input" [id]="categoria.id"
+                            [checked]='categoria.estatus'
+                            (change)='updateEstatusCategoria(categoria.id)'>
+                            <label class="form-check-label" [for]="categoria.id"></label>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        
+    </div>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination pagination-primary  justify-content-end">
+            <pagination-controls          
+            (pageChange)="p = $event"
+            previousLabel="Anterior"
+            nextLabel="Siguiente"
+            >
+            </pagination-controls>
+        </ul>
+    </nav>
+</div>

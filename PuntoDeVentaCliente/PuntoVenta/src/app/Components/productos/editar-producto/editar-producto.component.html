@@ -1,0 +1,163 @@
+<div class="container">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Editar productos</h4>
+                <div class="alert alert-dismissible show fade" *ngIf="result.IsSend"
+                [ngClass]="{'alert-success': result.success, 'alert-danger': !result.success}">
+                    {{result.message}}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
+                        (click)="CerrarMensaje()"></button>
+                </div>
+            </div>
+            <div class="card-content">
+                <div class="card-body">
+                    <form class="form" [formGroup]="productForm" (ngSubmit)="Guardar()">
+                        <div class="row">
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="first-name-column">Codigo</label>
+                                    <input type="text" class="form-control" placeholder="codigo"
+                                        formControlName="codigo"
+                                        [ngClass]="{'is-invalid': CamposValidos.codigo?.invalid && CamposValidos.codigo?.touched}">
+                                    <small *ngIf="CamposValidos.codigo?.invalid && CamposValidos.codigo?.touched"
+                                        style="font-weight: 600;" class="text-danger">
+                                        El codigo es requerido</small>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="last-name-column">Nombre del producto</label>
+                                    <input type="text" class="form-control" placeholder="Nombre del producto"
+                                        formControlName="nombreProducto"
+                                        [ngClass]="{'is-invalid': CamposValidos.nombreProducto?.invalid && CamposValidos.nombreProducto?.touched}">
+                                    <small
+                                        *ngIf="CamposValidos.nombreProducto?.invalid && CamposValidos.nombreProducto?.touched"
+                                        style="font-weight: 600;" class="text-danger">
+                                        El nombre del producto es requerido</small>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-12">
+                                <div class="form-group">
+                                    <label for="country-floating">Descripcion</label>
+                                    <textarea
+                                    class="form-control"
+                                    formControlName="descripcion"
+                                    placeholder="Descripcion"
+                                    [ngClass]="{'is-invalid': CamposValidos.descripcion?.invalid && CamposValidos.descripcion?.touched}">
+
+                                    </textarea>
+                                    <small
+                                        *ngIf="CamposValidos.descripcion?.invalid && CamposValidos.descripcion?.touched"
+                                        style="font-weight: 600;" class="text-danger">
+                                        La descripcion es requerida</small>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-12">
+                                <div class="form-group">
+                                    <label for="company-column">Categoria</label>
+                                    <div class="choices" [ngClass]="{'is-open-focused': ischoicesOpen}" data-type="select-one" tabindex="0" role="combobox"
+                                        aria-autocomplete="list" aria-haspopup="true" aria-expanded="ischoicesOpen"
+                                        >
+                                        <div class="choices__inner" (click)="openShoice()">
+                                            <select 
+                                                formControlName="idCategoria"
+                                                multiple class="choices form-select choices__input"
+                                                hidden="" tabindex="-1" data-choice="active"
+                                                
+                                                >
+                                                <option [ngValue]="categoriasSelected.id">{{categoriasSelected.nombre}}</option>
+                                            </select>
+                                            <div class="choices__list choices__list--single">
+                                                <div class="choices__item choices__item--selectable" data-item=""
+                                                    data-id="4" data-value="triangle" data-custom-properties="null"
+                                                    aria-selected="true">{{categoriasSelected.nombre}}</div>
+                                            </div>
+                                        </div>
+                                        <small *ngIf="!ischoicesOpen && IsSelectCategoria && CamposValidos.idCategoria?.hasError('required')" 
+                                        style="font-weight: 600;" class="text-danger">
+                                            La categoria es requerida</small>    
+                                        <div class="choices__list choices__list--dropdown" 
+                                        [ngClass]="{'is-active': ischoicesOpen}"
+                                        aria-expanded="ischoicesOpen">
+                                        <input
+                                                type="text" class="choices__input choices__input--cloned"                   
+                                                placeholder="Buscar categoria" 
+                                                [ngModelOptions]="{standalone: true}"
+                                                [ngModel]="searchCategoria" (ngModelChange)="filterCategoria($event)">
+                                            <div class="choices__list" role="listbox">
+                                                <div class="choices__group " role="group" data-group=""
+                                                    data-id="1538049411036" data-value="categorias">
+                                                    <div class="choices__heading">Categorias</div>
+                                                </div>
+                                                <div *ngFor="let item of ListCategoria">
+                                                    <div id="item.id"
+                                                    *ngIf="item.estatus"
+                                                    class="choices__item choices__item--choice choices__item--selectable"
+                                                    role="treeitem" data-choice="" data-id="7" data-value="blue"
+                                                    data-select-text="Press to select" data-choice-selectable=""
+                                                    (click)="selectCategoria(item.id, item.nombre)"
+                                                    >
+                                                    {{item.nombre}}
+                                                </div>    
+                                                </div>                                                                                                       
+                                            </div>
+                                        </div>
+                                    </div>     
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="company-column">Imagen</label>
+                                    <input type="email" class="form-control" placeholder="imagen"
+                                        formControlName="imagen"
+                                        [ngClass]="{'is-invalid': CamposValidos.imagen?.invalid && CamposValidos.imagen?.touched}">
+                                    <small *ngIf="CamposValidos.imagen?.invalid && CamposValidos.imagen?.touched"
+                                        style="font-weight: 600;" class="text-danger">
+                                        La imagen es requerida</small>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="company-column">Costo</label>
+                                    <input type="number" class="form-control" placeholder="Costo"
+                                        formControlName="costo"
+                                        [ngClass]="{'is-invalid': CamposValidos.costo?.invalid && CamposValidos.costo?.touched}">
+                                    <small *ngIf="CamposValidos.costo?.invalid && CamposValidos.costo?.touched"
+                                        style="font-weight: 600;" class="text-danger">
+                                        El costo es requerido</small>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="company-column">Precio</label>
+                                    <input type="number" class="form-control" placeholder="Precio"
+                                        formControlName="precio"
+                                        [ngClass]="{'is-invalid': CamposValidos.precio?.invalid && CamposValidos.precio?.touched}">
+                                    <small *ngIf="CamposValidos.precio?.invalid && CamposValidos.precio?.touched"
+                                        style="font-weight: 600;" class="text-danger">
+                                        El precio es requerido</small>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="company-column">Stock</label>
+                                    <input type="number" class="form-control" placeholder="Stock"
+                                        formControlName="stock"
+                                        [ngClass]="{'is-invalid': CamposValidos.stock?.invalid && CamposValidos.stock?.touched}">
+                                    <small *ngIf="CamposValidos.stock?.invalid && CamposValidos.stock?.touched"
+                                        style="font-weight: 600;" class="text-danger">
+                                        El stock es requerido</small>
+                                </div>
+                            </div>
+                            <div class="col-12 d-flex justify-content-end mt-2">
+                                <button type="submit"class="btn btn-primary me-1 mb-1 btn-block p-3" 
+                                    [disabled]="!productForm.valid">Guardar</button>                             
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

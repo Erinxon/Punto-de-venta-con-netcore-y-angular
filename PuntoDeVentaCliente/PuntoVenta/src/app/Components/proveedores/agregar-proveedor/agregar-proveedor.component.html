@@ -1,0 +1,142 @@
+<div class="container">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Agregar Proveedor</h4>
+
+                <div class="alert alert-dismissible show fade"
+                [ngClass]="{'alert-success': result.success, 'alert-danger': !result.success}"
+                *ngIf="result.IsSend">
+                    {{result.message}}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
+                    (click)="CerrarMensaje()"></button>
+                </div>
+
+            </div>
+            <div class="card-content">
+                <div class="card-body">
+                    <form class="form" [formGroup]="addProveedor" (ngSubmit)="Guardar()">
+                        <div class="row">
+                         
+                            <div class="col-md-12 col-12">
+                                <div class="form-group">
+                                    <label for="last-name-column">Razón Social</label>
+                                    <input 
+                                    type="text" 
+                                    class="form-control" 
+                                    placeholder="Razón Social"
+                                    formControlName="razonSocial"
+                                    [ngClass]="{'is-invalid': CamposValidos.razonSocial?.invalid && CamposValidos.razonSocial?.touched}">
+                                    <small *ngIf="CamposValidos.razonSocial?.invalid && CamposValidos.razonSocial?.touched" 
+                                    style="font-weight: 600;" class="text-danger">
+                                        La razonSocial es requerida</small>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="first-name-column">Rnc</label>
+                                    <input type="text" 
+                                    class="form-control" 
+                                    placeholder="Rnc"
+                                    formControlName="rnc"
+                                    [ngClass]="{'is-invalid': CamposValidos.rnc?.invalid && CamposValidos.rnc?.touched}"
+                                    >
+                                    <small *ngIf="CamposValidos.rnc?.invalid && CamposValidos.rnc?.touched" 
+                                    style="font-weight: 600;" class="text-danger">
+                                        El rnc es requerido</small>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="country-floating">Telefono</label>
+                                    <input 
+                                    type="text" 
+                                    class="form-control"
+                                    placeholder="Telefono"
+                                    formControlName="telefono"
+                                    [ngClass]="{'is-invalid': CamposValidos.telefono?.invalid && CamposValidos.telefono?.touched}">                                
+                                    <small *ngIf="CamposValidos.telefono?.invalid && CamposValidos.telefono?.touched" 
+                                    style="font-weight: 600;" class="text-danger">
+                                        El telefono es requerido (Debe ser valido)</small>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-12">
+                                <h4 class="card-title">Dirección</h4>
+                                <div class="row" formGroupName="direccion">                                   
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label for="company-column">Provincia</label>
+                                            <input 
+                                            type="text"  
+                                            class="form-control" 
+                                            placeholder="Provincia"
+                                            formControlName="provincia"
+                                            [ngClass]="{'is-invalid': CamposValidos.provincia?.invalid && CamposValidos.provincia?.touched}">                                           
+                                            <small *ngIf="CamposValidos.provincia?.invalid && CamposValidos.provincia?.touched" 
+                                            style="font-weight: 600;" class="text-danger">
+                                                La provicia es requerida</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label for="company-column">Ciudad</label>
+                                            <input 
+                                            type="text" 
+                                            class="form-control"
+                                            placeholder="Ciudad"
+                                            formControlName="ciudad"
+                                            [ngClass]="{'is-invalid': CamposValidos.ciudad?.invalid && CamposValidos.ciudad?.touched}">                                           
+                                            <small *ngIf="CamposValidos.ciudad?.invalid && CamposValidos.ciudad?.touched" 
+                                            style="font-weight: 600;" class="text-danger">
+                                                La ciudad es requerida</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label for="company-column">Calle</label>
+                                            <input 
+                                            type="text"  
+                                            class="form-control" 
+                                            placeholder="Calle"
+                                            formControlName="calle"
+                                            [ngClass]="{'is-invalid': CamposValidos.calle?.invalid && CamposValidos.calle?.touched}">                                         
+                                            <small *ngIf="CamposValidos.calle?.invalid && CamposValidos.calle?.touched"
+                                            style="font-weight: 600;"
+                                             class="text-danger">
+                                                La calle es requerida</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label for="company-column">Casa</label>
+                                            <input 
+                                            type="text" 
+                                            class="form-control" 
+                                            placeholder="Casa"
+                                            formControlName="numeroCasa"
+                                            [ngClass]="{'is-invalid': CamposValidos.numeroCasa?.invalid && CamposValidos.numeroCasa?.touched}">                                   
+                                            <small *ngIf="CamposValidos.numeroCasa?.invalid && CamposValidos.numeroCasa?.touched" 
+                                            style="font-weight: 600;"
+                                            class="text-danger">
+                                                La casa es requerida</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 d-flex justify-content-end mt-2">
+                                <button 
+                                type="submit" 
+                                class="btn btn-primary me-1 mb-1"
+                                [disabled] = "!addProveedor.valid"                                
+                                >Guardar</button>
+                                <button 
+                                type="reset" 
+                                class="btn btn-light-secondary me-1 mb-1">Limpiar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>  
+</div>

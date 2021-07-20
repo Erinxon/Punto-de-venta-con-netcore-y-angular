@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Punto Venta</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/bootstrap.css">
+
+    <link rel="stylesheet" href="./assets/vendors/iconly/bold.css">
+
+    <link rel="stylesheet" href="./assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="./assets/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="./assets/css/app.css">
+    <link rel="stylesheet" href="assets/vendors/choices.js/choices.min.css" />
+</head>
+<body class="mat-typography">
+  <app-root></app-root>
+  <script src="./assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+  <script src="./assets/js/bootstrap.bundle.min.js"></script>
+
+  <script src="./assets/vendors/apexcharts/apexcharts.js"></script>
+  <script src="./assets/js/pages/dashboard.js"></script>
+
+  <script src="./assets/js/main.js"></script>
+  <script src="https://kit.fontawesome.com/7de94cbd13.js" crossorigin="anonymous"></script>
+  <script src="assets/vendors/choices.js/choices.min.js"></script>
+
+  <script>
+      const desplegarMenu = () => {
+        let menu  = document.getElementById('sidebar');
+        let main = document.querySelector('.layout-navbar');
+        console.log(main)
+         if(menu.classList.contains('active')){
+           menu.classList.remove('active');
+           main.removeAttribute('id');
+         }else{
+          menu.classList.add('active');
+          main.setAttribute('id', 'main')
+         }
+      }
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<div class="container">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Agregar Usuario</h4>
+
+                <div class="alert alert-dismissible show fade"
+                [ngClass]="{'alert-success': result.success, 'alert-danger': !result.success}"
+                *ngIf="result.IsSend">
+                    {{result.message}}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
+                    (click)="CerrarMensaje()"></button>
+                </div>
+
+            </div>
+            <div class="card-content">
+                <div class="card-body">
+                    <form class="form" [formGroup]="usuarioForm" (ngSubmit)="Guardar()">
+                        <div class="row">
+                         
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="last-name-column">Email</label>
+                                    <input 
+                                    type="email" 
+                                    class="form-control" 
+                                    placeholder="Email"
+                                    formControlName="email"
+                                    [ngClass]="{'is-invalid': CamposValidos.email?.invalid && CamposValidos.email?.touched}">
+                                    <small *ngIf="CamposValidos.email?.invalid && CamposValidos.email?.touched" 
+                                    style="font-weight: 600;" class="text-danger">
+                                        El email es requerido</small>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="first-name-column">Nombre Usuario</label>
+                                    <input type="text" 
+                                    class="form-control" 
+                                    placeholder="Nombre de usuario"
+                                    formControlName="nombreUsuario"
+                                    [ngClass]="{'is-invalid': CamposValidos.nombreUsuario?.invalid && CamposValidos.nombreUsuario?.touched}"
+                                    >
+                                    <small *ngIf="CamposValidos.nombreUsuario?.invalid && CamposValidos.nombreUsuario?.touched" 
+                                    style="font-weight: 600;" class="text-danger">
+                                        El nombre de usuario es requerido</small>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="country-floating">Nombre</label>
+                                    <input 
+                                    type="text" 
+                                    class="form-control"
+                                    placeholder="Nombre"
+                                    formControlName="nombre"
+                                    [ngClass]="{'is-invalid': CamposValidos.nombre?.invalid && CamposValidos.nombre?.touched}">                                
+                                    <small *ngIf="CamposValidos.nombre?.invalid && CamposValidos.nombre?.touched" 
+                                    style="font-weight: 600;" class="text-danger">
+                                        El nombre es requerido</small>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="country-floating">Apellido</label>
+                                    <input 
+                                    type="text" 
+                                    class="form-control"
+                                    placeholder="Apellido"
+                                    formControlName="apellido"
+                                    [ngClass]="{'is-invalid': CamposValidos.apellido?.invalid && CamposValidos.apellido?.touched}">                                
+                                    <small *ngIf="CamposValidos.apellido?.invalid && CamposValidos.apellido?.touched" 
+                                    style="font-weight: 600;" class="text-danger">
+                                        El apellido es requerido</small>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-12">
+                                <fieldset class="form-group">
+                                    <label for="country-floating">Roll</label>
+                                    <select class="form-select" id="basicSelect"
+                                    formControlName="roll">
+                                        <option>Administrador</option>
+                                        <option>Cajero</option>
+                                    </select>
+                                </fieldset>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="country-floating">Contraseña</label>
+                                    <input 
+                                    type="password" 
+                                    class="form-control"
+                                    placeholder="Contraseña"
+                                    formControlName="pass"
+                                    [ngClass]="{'is-invalid': CamposValidos.pass?.invalid && CamposValidos.pass?.touched}">                                
+                                    <small *ngIf="CamposValidos.pass?.invalid && CamposValidos.pass?.touched" 
+                                    style="font-weight: 600;" class="text-danger">
+                                        La contraseña es requerida</small>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="country-floating">Repetir contraseña</label>
+                                    <input 
+                                    type="password" 
+                                    class="form-control"
+                                    placeholder="Repetir contraseña"
+                                    formControlName="RepetirPass"
+                                    [ngClass]="{'is-invalid': CamposValidos.RepetirPass?.invalid && CamposValidos.RepetirPass?.touched}">                                
+                                    <small *ngIf="CamposValidos.RepetirPass?.invalid && CamposValidos.RepetirPass?.touched" 
+                                    style="font-weight: 600;" class="text-danger">
+                                        La contraseña es requerida</small>
+                                </div>
+                            </div>
+
+                            <div class="col-12 d-flex justify-content-end mt-2">
+                                <button 
+                                type="submit" 
+                                class="btn btn-primary me-1 mb-1"
+                                [disabled] = "!usuarioForm.valid"                                
+                                >Guardar</button>
+                                <button 
+                                type="reset" 
+                                class="btn btn-light-secondary me-1 mb-1">Limpiar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>  
+</div>

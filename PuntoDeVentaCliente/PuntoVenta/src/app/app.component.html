@@ -1,0 +1,13 @@
+<div *ngIf="isLogin">
+    <app-menu></app-menu>
+    <div id="main" class='layout-navbar'>
+        <app-header></app-header>
+        <app-content></app-content>
+    </div>
+
+
+</div>
+
+<div *ngIf="!isLogin">
+    <app-content></app-content>
+</div>
