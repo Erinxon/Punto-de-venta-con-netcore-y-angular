@@ -1,7 +1,7 @@
-# Punto-de-venta-con-netcore-y-angular
-Punto de venta sencillo hecho con C# Net Core (Backend) y Angular (Frontend)
+#Punto de venta sencillo hecho con C# Net Core (Backend) y Angular (Frontend)
 
-Endpoints Web API
+#Endpoints Web API
+
 ![N|Solid](https://i.ibb.co/J207g1t/Cliente.png)
 ![N|Solid](https://i.ibb.co/F3YdqjV/Categoria.png)
 ![N|Solid](https://i.ibb.co/XWtQLfL/Compra-And-Empresa.png)
